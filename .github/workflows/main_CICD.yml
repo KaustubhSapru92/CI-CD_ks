@@ -16,25 +16,34 @@ jobs:
       with:
         python-version: 3.8
 
-    # Step 2: Install dependencies using `make install` from your Makefile
+    # Step 2: Install dependencies
     - name: Install dependencies
       run: |
-        make install
+        pip install --upgrade pip
+        pip install -r requirements.txt  # Or any other command to install your dependencies
 
-    # Step 3: Lint with pylint using `make lint` from your Makefile
+    # Step 3: Lint with pylint using 'make lint' from your Makefile
     - name: Lint with pylint
       run: |
         make lint
 
-    # Step 4: Test with pytest using `make test` from your Makefile
+    # Step 4: Test with pytest using 'make test' from your Makefile
     - name: Test with pytest
       run: |
         make test
 
-    # Step 5: Format code using `make format` from your Makefile
-    - name: Format code
+    # Step 5: Format code using black
+    - name: Install black
       run: |
-        make format
+        pip install black==21.6b0  # You can specify the version of black compatible with Python 3.8
+    - name: Format code with black
+      run: |
+        black .  # Format all Python files in the repository
 
-    
-    
+    # (Optional) If you want to commit the formatted code back to the repository
+    # - name: Commit formatted code
+    #   run: |
+    #     git add .
+    #     git commit -m "Apply black formatting"
+    #     git push
+
